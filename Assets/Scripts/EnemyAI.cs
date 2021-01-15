@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float targetRange = 5f;
     NavMeshAgent navMeshAgent;
     float distanceToTarget = Mathf.Infinity;
+    bool isProvoked = false;
 
     void Start()
     {
@@ -18,10 +19,45 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         distanceToTarget = Vector3.Distance(transform.position, target.position);
-        if(distanceToTarget <= targetRange)
+        if(isProvoked)
         {
-            // Have AI agent move towards players current position
-            navMeshAgent.SetDestination(target.position);
+            EngageTarget();
         }
+        else if(distanceToTarget <= targetRange)
+        {
+            isProvoked = true;
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, targetRange);
+    }
+
+    private void EngageTarget()
+    {
+        
+        if(distanceToTarget >= navMeshAgent.stoppingDistance)
+        {
+            ChaseTarget();
+        }
+        if(distanceToTarget <= navMeshAgent.stoppingDistance)
+        {
+            AttackTarget();
+        }
+    }
+
+    private void ChaseTarget()
+    {
+        // Have AI agent move towards players current position
+        navMeshAgent.SetDestination(target.position);
+    }
+
+    private void AttackTarget()
+    {
+        // Insert attack functionality here
+        print("DIE HUMAN! *stab*");
     }
 }
