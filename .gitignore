@@ -61,3 +61,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Custom directories to ignore
+Assets/Plasma Guns Lite/
+Assets/Plasma Guns Lite.meta
