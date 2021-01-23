@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] Camera FPSCamera;
     [SerializeField] float range = 100f;
+    [SerializeField] int damage = 30;
 
     void Update()
     {
@@ -17,24 +18,18 @@ public class Weapon : MonoBehaviour
 
     private void FireWeapon()
     {
+        // Send raycast and get info to check if enemy is hit or not
         RaycastHit hit;
         bool raycastHit = Physics.Raycast(FPSCamera.transform.position, FPSCamera.transform.forward, out hit, range);
-        var objectHitString = "";
         if(raycastHit)
         {
-            if(hit.transform.parent)
-            {
-                objectHitString = hit.transform.parent.name + " > " + hit.transform.name; 
-            }
-            else
-            {
-                objectHitString = hit.transform.name;
-            }
-            print("You've hit something! [" + objectHitString + "]");
+            // TODO: Add some hit effect for visual confirmation
+            EnemyHealth target = hit.transform.GetComponent<EnemyHealth>();
+            if(target){ target.TakeDamage(damage); } else { return; }
         }
         else
         {
-            print("No object was hurt in the playing of this game.");
+            return;
         }
     }
 }
