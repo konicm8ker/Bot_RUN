@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] Camera FPSCamera;
     [SerializeField] ParticleSystem muzzleFlashVFX;
+    [SerializeField] GameObject weaponHitVFX;
     [SerializeField] float range = 100f;
     [SerializeField] int damage = 10;
 
@@ -36,7 +38,7 @@ public class Weapon : MonoBehaviour
         bool raycastHit = Physics.Raycast(FPSCamera.transform.position, FPSCamera.transform.forward, out hit, range);
         if(raycastHit)
         {
-            // TODO: Add some hit effect for visual confirmation
+            ProcessWeaponHitVFX(hit);
             EnemyHealth target = hit.transform.GetComponent<EnemyHealth>();
             if(target){ target.TakeDamage(damage); } else { return; }
         }
@@ -44,5 +46,12 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
+    }
+
+    private void ProcessWeaponHitVFX(RaycastHit hit)
+    {
+        // Add some hit effect for visual confirmation
+        GameObject weaponHit = Instantiate(weaponHitVFX, hit.point, Quaternion.LookRotation(hit.normal));
+        Destroy(weaponHit, 0.1f);
     }
 }
