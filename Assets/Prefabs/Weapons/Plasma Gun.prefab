@@ -150,7 +150,7 @@ MonoBehaviour:
   weaponHitVFX: {fileID: 7747730413217232479, guid: 83619a40ead68ef89b7c0d7e015e92bd,
     type: 3}
   range: 100
-  damage: 10
+  damage: 20
 --- !u!1 &988879978768749413
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] ParticleSystem muzzleFlashVFX;
     [SerializeField] GameObject weaponHitVFX;
     [SerializeField] float range = 100f;
-    [SerializeField] int damage = 10;
+    [SerializeField] int damage = 20;
 
     void Update()
     {
