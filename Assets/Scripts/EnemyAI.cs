@@ -70,7 +70,5 @@ public class EnemyAI : MonoBehaviour
         navMeshAgent.enabled = false;
         enemyAnimator.SetBool("attack", true);
 
-        // Insert attack functionality here
-        print("DIE HUMAN! *stab*");
     }
 }
