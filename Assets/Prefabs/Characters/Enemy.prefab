@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   targetRange: 5
+  rotateSpeed: 5
 --- !u!114 &2781948128775107580
 MonoBehaviour:
   m_ObjectHideFlags: 0
