@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
         if(health <= 0)
         {
             // print("GAME OVER!");
+            GetComponent<DeathHandler>().HandleDeath();
         }
         
     }

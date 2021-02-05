@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] float targetRange = 5f;
     [SerializeField] float rotateSpeed = 5f;
+    [SerializeField] DeathHandler deathHandler;
     NavMeshAgent navMeshAgent;
     Animator enemyAnimator;
     float distanceToTarget = Mathf.Infinity;
@@ -49,7 +50,8 @@ public class EnemyAI : MonoBehaviour
         }
         if(distanceToTarget <= navMeshAgent.stoppingDistance)
         {
-            AttackTarget();
+            if(deathHandler.gameOver == false){ AttackTarget(); }
+            else { isProvoked = false; enemyAnimator.enabled = false; }
         }
     }
 
@@ -82,4 +84,5 @@ public class EnemyAI : MonoBehaviour
         // Set new direction and rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotateSpeed);
     }
+
 }

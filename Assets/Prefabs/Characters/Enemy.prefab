@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 3541511576416813085}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +116,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 2.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -136,9 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ade8313f2d8a2118db2467f2faa0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 7197890598981612832, guid: dbde1f2a2d8ab7e699291d740cb783de, type: 3}
   targetRange: 5
   rotateSpeed: 5
+  deathHandler: {fileID: 6252517533241762860, guid: dbde1f2a2d8ab7e699291d740cb783de,
+    type: 3}
 --- !u!114 &2781948128775107580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce5965370cec97c4ca06de7b6572422c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 20
 --- !u!1 &4021422677139352275
 GameObject:
   m_ObjectHideFlags: 0
