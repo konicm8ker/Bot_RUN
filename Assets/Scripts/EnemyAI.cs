@@ -42,6 +42,11 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, targetRange);
     }
 
+    public void OnDamageTaken()
+    {
+        isProvoked = true;
+    }
+
     private void EngageTarget()
     {
         if(distanceToTarget >= navMeshAgent.stoppingDistance)

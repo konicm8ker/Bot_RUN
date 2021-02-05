@@ -17,4 +17,5 @@ public class EnemyAttack : MonoBehaviour
         if(!target){ return; }
         target.TakeDamage(damage);
     }
+
 }
