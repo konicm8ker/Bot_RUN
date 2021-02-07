@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] Transform target;
     [SerializeField] float targetRange = 5f;
     [SerializeField] float rotateSpeed = 5f;
+    [SerializeField] Transform target;
     [SerializeField] DeathHandler deathHandler;
     NavMeshAgent navMeshAgent;
     Animator enemyAnimator;

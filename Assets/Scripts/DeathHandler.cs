@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DentedPixel;
 
 public class DeathHandler : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class DeathHandler : MonoBehaviour
     public bool gameOver = false;
     [SerializeField] GameObject gameOverCanvas;
     [SerializeField] Animator playerAnimator;
+    [SerializeField] Button playAgainBtn;
+    [SerializeField] GameObject gunReticle;
+    float gameOverFadeIn = 4f;
 
     void Start()
     {
@@ -17,12 +22,21 @@ public class DeathHandler : MonoBehaviour
     public void HandleDeath()
     {
         gameOver = true;
+        gunReticle.SetActive(false);
         // Display the Game Over menu overlay
         gameOverCanvas.SetActive(true);
+        FadeInOverlay();
         ProcessMouseInput();
         ProcessDeathAnimation();
         
         
+    }
+
+    private void FadeInOverlay()
+    {
+        // Tween UI fade in for game over overlay
+        CanvasGroup gameOverCG = gameOverCanvas.GetComponent<CanvasGroup>();
+        LeanTween.alphaCanvas(gameOverCG, 1f, gameOverFadeIn);
     }
 
     private void ProcessMouseInput()
@@ -46,5 +60,6 @@ public class DeathHandler : MonoBehaviour
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        playAgainBtn.Select();
     }
 }
