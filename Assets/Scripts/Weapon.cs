@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField] Ammo ammoSlot;
     [SerializeField] Camera FPSCamera;
     [SerializeField] ParticleSystem muzzleFlashVFX;
     [SerializeField] GameObject weaponHitVFX;
@@ -15,14 +16,20 @@ public class Weapon : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire1"))
         {
-            FireWeapon();
+            FireWeapon();   
         }
     }
 
     private void FireWeapon()
     {
-        PlayFiringVFX();
-        ProcessRaycast();
+        // Only fire if enough ammo
+        if(ammoSlot.RequestAmmoAmount() > 0)
+        {
+            PlayFiringVFX();
+            ProcessRaycast();
+            ammoSlot.ReduceAmmoAmount();
+        }
+        else { print("OUT OF AMMO."); }
     }
 
     private void PlayFiringVFX()

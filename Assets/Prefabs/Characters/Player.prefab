@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7197890598981576961}
   - component: {fileID: 6252517533241762860}
   - component: {fileID: 1614072641844451283}
+  - component: {fileID: 775233820056184477}
   - component: {fileID: 189571372}
   m_Layer: 2
   m_Name: Player
@@ -351,8 +352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b71739387f83eb7b76e793f93fba43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 7197890598981576960}
   gameOver: 0
+  controller: {fileID: 7197890598981576960}
+  fpsController: {fileID: 7197890598987619552}
   gameOverCanvas: {fileID: 0}
   playerAnimator: {fileID: 189571372}
   playAgainBtn: {fileID: 0}
@@ -371,6 +373,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpsController: {fileID: 7197890598987619552}
   mainCamera: {fileID: 7197890598982167328}
+--- !u!114 &775233820056184477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7197890598981576960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daef2b94dd9b8d572b27fb1a7c6e9ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoAmount: 10
 --- !u!95 &189571372
 Animator:
   serializedVersion: 3
@@ -881,6 +896,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7135955000894180816, guid: 93f8436b13a46338e9a6872f6818ff54,
+        type: 3}
+      propertyPath: ammo
+      value: 
+      objectReference: {fileID: 775233820056184477}
     - target: {fileID: 7135955000894180816, guid: 93f8436b13a46338e9a6872f6818ff54,
         type: 3}
       propertyPath: FPSCamera
