@@ -2,47 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 using DentedPixel;
 
 public class DeathHandler : MonoBehaviour
 {
-    public GameObject controller;
     public bool gameOver = false;
+    public GameObject controller;
+    [SerializeField] FirstPersonController fpsController;
     [SerializeField] GameObject gameOverCanvas;
     [SerializeField] Animator playerAnimator;
     [SerializeField] Button playAgainBtn;
     [SerializeField] GameObject gunReticle;
-    float gameOverFadeIn = 4f;
+    Camera fpsCamera;
+    float fadeInDuration = 4f;
+    bool alignToCenter = false;
 
     void Start()
     {
+        fpsCamera = transform.GetChild(0).GetComponent<Camera>();
         playerAnimator.enabled = false;
+    }
+
+    void Update()
+    {
+        if(alignToCenter)
+        {
+            // Align player angle direction to center
+            Vector3 targetPos = new Vector3(0f, fpsCamera.transform.eulerAngles.y, fpsCamera.transform.eulerAngles.z);
+            Quaternion targetRotation = Quaternion.Euler(targetPos);
+            fpsCamera.transform.rotation = Quaternion.Slerp(fpsCamera.transform.rotation, targetRotation, Time.deltaTime * 5f);
+            // Run post align functions after aligning to center
+            if(fpsCamera.transform.eulerAngles.x < 10f || fpsCamera.transform.eulerAngles.x > 349f){ PostAlign(); }
+        }
     }
 
     public void HandleDeath()
     {
         gameOver = true;
         gunReticle.SetActive(false);
+        // Set default FOV if zoomed in
+        SendMessage("SetDefaultZoom");
+        ProcessMouseInput();
+        alignToCenter = true;
+    }
+
+    private void PostAlign()
+    {
+        alignToCenter = false;
         // Display the Game Over menu overlay
         gameOverCanvas.SetActive(true);
         FadeInOverlay();
-        ProcessMouseInput();
         ProcessDeathAnimation();
-        
-        
     }
 
     private void FadeInOverlay()
     {
         // Tween UI fade in for game over overlay
         CanvasGroup gameOverCG = gameOverCanvas.GetComponent<CanvasGroup>();
-        LeanTween.alphaCanvas(gameOverCG, 1f, gameOverFadeIn);
+        LeanTween.alphaCanvas(gameOverCG, 1f, fadeInDuration);
     }
 
     private void ProcessMouseInput()
     {
         // Disable the FPSController mouse lock functions and prevent mouse from moving camera, finally make mouse visible
-        var fpsController = controller.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
         fpsController.gameOver = true; // Let fps script know that game is over and disable some things
         fpsController.m_MouseLook.lockCursor = false;
         fpsController.m_MouseLook.m_cursorIsLocked = false;

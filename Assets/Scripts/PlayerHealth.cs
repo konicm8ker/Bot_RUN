@@ -9,10 +9,9 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        // if(health > 0){ print("Health: " + health); }
         if(health <= 0)
         {
-            // print("GAME OVER!");
+            // Process post death methods
             GetComponent<DeathHandler>().HandleDeath();
         }
         
