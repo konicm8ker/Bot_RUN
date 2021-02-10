@@ -41,8 +41,11 @@ public class DeathHandler : MonoBehaviour
     {
         gameOver = true;
         gunReticle.SetActive(false);
-        // Set default FOV if zoomed in
-        SendMessage("SetDefaultZoom");
+        if(FindObjectOfType<WeaponSwitcher>().currentWeapon == 0)
+        {
+            // Set default FOV if zoomed in
+            BroadcastMessage("SetDefaultZoom");
+        }
         ProcessMouseInput();
         alignToCenter = true;
     }
@@ -81,6 +84,8 @@ public class DeathHandler : MonoBehaviour
     private void StopTime()
     {
         Time.timeScale = 0;
+        // Disable weapon switching when time stops
+        FindObjectOfType<WeaponSwitcher>().enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         playAgainBtn.Select();

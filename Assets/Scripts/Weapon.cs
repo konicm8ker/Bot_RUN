@@ -11,17 +11,28 @@ public class Weapon : MonoBehaviour
     [SerializeField] GameObject weaponHitVFX;
     [SerializeField] float range = 100f;
     [SerializeField] int damage = 20;
+    [SerializeField] float timeBetweenShots = 0.5f;
+    [SerializeField] bool isAuto = true;
+    bool canShoot = true;
 
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetMouseButton(0) && canShoot && isAuto)
         {
-            FireWeapon();   
+            // Handle firing for automatic weapon
+            StartCoroutine(FireWeapon());
         }
+        else if(Input.GetMouseButtonDown(0) && canShoot)
+        {
+            // Handle firing for other weapons
+            StartCoroutine(FireWeapon());   
+        }
+
     }
 
-    private void FireWeapon()
+    IEnumerator FireWeapon()
     {
+        canShoot = false;
         // Only fire if enough ammo
         if(ammoSlot.RequestAmmoAmount() > 0)
         {
@@ -30,6 +41,8 @@ public class Weapon : MonoBehaviour
             ammoSlot.ReduceAmmoAmount();
         }
         else { print("OUT OF AMMO."); }
+        yield return new WaitForSeconds(timeBetweenShots);
+        canShoot = true;
     }
 
     private void PlayFiringVFX()
