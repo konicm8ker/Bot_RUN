@@ -11,7 +11,7 @@ public class WeaponZoom : MonoBehaviour
     float zoomOutFOV = 60f;
     float zoomInSensitivity = 0.5f;
     float zoomOutSensitivity = 2f;
-    public bool isZoomed = false;
+    bool isZoomed = false;
 
     void Update()
     {
@@ -32,6 +32,7 @@ public class WeaponZoom : MonoBehaviour
 
     public void SetDefaultZoom()
     {
+        isZoomed = false;
         ChangeFPSettings(zoomOutFOV, zoomOutSensitivity);
     }
 

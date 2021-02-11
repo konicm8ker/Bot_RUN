@@ -10,6 +10,7 @@ public class WeaponSwitcher : MonoBehaviour
     [SerializeField] float timerDuration = 0.25f;
     [SerializeField] string scrollState = "";
     public int weaponToBeSwitched = 0;
+    bool inputLock = false;
 
     void Start()
     {
@@ -19,8 +20,11 @@ public class WeaponSwitcher : MonoBehaviour
     void Update()
     {
         int previousWeapon = currentWeapon;
-        ProcessKeyInput();
-        ProcessScrollWheel();
+        if(inputLock == false)
+        {
+            ProcessKeyInput();
+            ProcessScrollWheel();
+        }
     }
 
     private void SetActiveWeapon()
@@ -46,20 +50,32 @@ public class WeaponSwitcher : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            weaponToBeSwitched = 0;
-            StartWeaponSwitch();
+            if(currentWeapon != 0)
+            {
+                inputLock = true;
+                weaponToBeSwitched = 0;
+                StartWeaponSwitch();
+            }
         }
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            ResetZoom();
-            weaponToBeSwitched = 1;
-            StartWeaponSwitch();
+            if(currentWeapon != 1)
+            {
+                inputLock = true;
+                ResetZoom();
+                weaponToBeSwitched = 1;
+                StartWeaponSwitch();
+            }
         }
         if(Input.GetKeyDown(KeyCode.Alpha3))
         {
-            ResetZoom();
-            weaponToBeSwitched = 2;
-            StartWeaponSwitch();
+            if(currentWeapon != 2)
+            {
+                inputLock = true;
+                ResetZoom();
+                weaponToBeSwitched = 2;
+                StartWeaponSwitch();
+            }
         }
     }
 
@@ -122,6 +138,7 @@ public class WeaponSwitcher : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
         weaponAnimator.SetTrigger("Idle");
+        inputLock = false;
     }
 
     private void WeaponSwitchDelay()
@@ -132,7 +149,12 @@ public class WeaponSwitcher : MonoBehaviour
             ResetZoom();
             timer += Time.deltaTime;
             if(timer >= timerDuration){
+                inputLock = true;
                 weaponToBeSwitched++;
+                if(weaponToBeSwitched > 2)
+                {
+                    weaponToBeSwitched = 2;
+                }
                 StartWeaponSwitch();
                 timer = 0f;
                 scrollState = "";
@@ -143,7 +165,12 @@ public class WeaponSwitcher : MonoBehaviour
             ResetZoom();
             timer += Time.deltaTime;
             if(timer >= timerDuration){
+                inputLock = true;
                 weaponToBeSwitched--;
+                if(weaponToBeSwitched < 0)
+                {
+                    weaponToBeSwitched = 0;
+                }
                 StartWeaponSwitch();
                 timer = 0f;
                 scrollState = "";
@@ -156,10 +183,9 @@ public class WeaponSwitcher : MonoBehaviour
     {
         // If weapon is zoomed in reset zoom before switching to non zoom weapon
         if(currentWeapon == 0)
-            {
-                FindObjectOfType<WeaponZoom>().isZoomed = false;
-                FindObjectOfType<WeaponZoom>().SetDefaultZoom();
-            }
+        {
+            FindObjectOfType<WeaponZoom>().SetDefaultZoom();
+        }
     }
 
 }

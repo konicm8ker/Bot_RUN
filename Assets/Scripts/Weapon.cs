@@ -6,6 +6,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] Ammo ammoSlot;
+    [SerializeField] AmmoType ammoType;
     [SerializeField] Camera FPSCamera;
     [SerializeField] ParticleSystem muzzleFlashVFX;
     [SerializeField] GameObject weaponHitVFX;
@@ -13,7 +14,13 @@ public class Weapon : MonoBehaviour
     [SerializeField] int damage = 20;
     [SerializeField] float timeBetweenShots = 0.5f;
     [SerializeField] bool isAuto = true;
-    bool canShoot = true;
+    public bool canShoot = true;
+
+    void OnEnable()
+    {
+        // Makes sure weapons can shoot when switched back and forth
+        canShoot = true;    
+    }
 
     void Update()
     {
@@ -34,11 +41,11 @@ public class Weapon : MonoBehaviour
     {
         canShoot = false;
         // Only fire if enough ammo
-        if(ammoSlot.RequestAmmoAmount() > 0)
+        if(ammoSlot.RequestAmmoAmount(ammoType) > 0)
         {
             PlayFiringVFX();
             ProcessRaycast();
-            ammoSlot.ReduceAmmoAmount();
+            ammoSlot.ReduceAmmoAmount(ammoType);
         }
         else { print("OUT OF AMMO."); }
         yield return new WaitForSeconds(timeBetweenShots);
