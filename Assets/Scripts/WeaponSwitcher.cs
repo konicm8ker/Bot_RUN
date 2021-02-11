@@ -5,9 +5,11 @@ using UnityEngine;
 public class WeaponSwitcher : MonoBehaviour
 {
     public int currentWeapon = 0;
+    [SerializeField] Animator weaponAnimator;
     [SerializeField] float timer = 0f;
     [SerializeField] float timerDuration = 0.25f;
-    [SerializeField] string switchState = "";
+    [SerializeField] string scrollState = "";
+    public int weaponToBeSwitched = 0;
 
     void Start()
     {
@@ -19,15 +21,11 @@ public class WeaponSwitcher : MonoBehaviour
         int previousWeapon = currentWeapon;
         ProcessKeyInput();
         ProcessScrollWheel();
-
-        if(previousWeapon != currentWeapon)
-        {
-            SetActiveWeapon();
-        }
     }
 
     private void SetActiveWeapon()
     {
+        // Loop through each child object and enable/disable weapon
         int weaponIndex = 0;
         foreach(Transform weapon in transform)
         {
@@ -48,15 +46,20 @@ public class WeaponSwitcher : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            currentWeapon = 0;
+            weaponToBeSwitched = 0;
+            StartWeaponSwitch();
         }
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            currentWeapon = 1;
+            ResetZoom();
+            weaponToBeSwitched = 1;
+            StartWeaponSwitch();
         }
         if(Input.GetKeyDown(KeyCode.Alpha3))
         {
-            currentWeapon = 2;
+            ResetZoom();
+            weaponToBeSwitched = 2;
+            StartWeaponSwitch();
         }
     }
 
@@ -71,7 +74,7 @@ public class WeaponSwitcher : MonoBehaviour
             }
             else
             {
-                switchState = "up";
+                scrollState = "up";
             }
         }
         if(Input.GetAxis("Mouse ScrollWheel") < 0)
@@ -82,35 +85,81 @@ public class WeaponSwitcher : MonoBehaviour
             }
             else
             {
-                switchState = "down";
+                scrollState = "down";
             }
         }
         WeaponSwitchDelay();
 
     }
 
+    private void StartWeaponSwitch()
+    {
+        // Play weapon switch animation
+        weaponAnimator.SetTrigger("WeaponSwitchStart");
+        StartCoroutine(WaitForWeaponSwitchStart());
+    }
+
+    IEnumerator WaitForWeaponSwitchStart()
+    {
+        yield return new WaitForSeconds(.5f);
+        SwitchWeapon();
+    }
+
+    public void SwitchWeapon()
+    {
+        currentWeapon = weaponToBeSwitched;
+        SetActiveWeapon();
+        EndWeaponSwitch();
+    }
+
+    private void EndWeaponSwitch()
+    {
+        weaponAnimator.SetTrigger("WeaponSwitchEnd");
+        StartCoroutine(WaitForWeaponSwitchEnd());
+    }
+
+    IEnumerator WaitForWeaponSwitchEnd()
+    {
+        yield return new WaitForSeconds(.5f);
+        weaponAnimator.SetTrigger("Idle");
+    }
+
     private void WeaponSwitchDelay()
     {
-
-        if(switchState == "up")
-        { 
-            timer += Time.deltaTime;
-            if(timer >= timerDuration){
-                currentWeapon++;
-                timer = 0f;
-                switchState = "";
-            }
-        }
-        if(switchState == "down")
+        // Only switch weapons from scroll wheel at smooth rate
+        if(scrollState == "up")
         {
+            ResetZoom();
             timer += Time.deltaTime;
             if(timer >= timerDuration){
-                currentWeapon--;
+                weaponToBeSwitched++;
+                StartWeaponSwitch();
                 timer = 0f;
-                switchState = "";
+                scrollState = "";
+            }
+        }
+        if(scrollState == "down")
+        {
+            ResetZoom();
+            timer += Time.deltaTime;
+            if(timer >= timerDuration){
+                weaponToBeSwitched--;
+                StartWeaponSwitch();
+                timer = 0f;
+                scrollState = "";
             }
         }
 
+    }
+
+    private void ResetZoom()
+    {
+        // If weapon is zoomed in reset zoom before switching to non zoom weapon
+        if(currentWeapon == 0)
+            {
+                FindObjectOfType<WeaponZoom>().isZoomed = false;
+                FindObjectOfType<WeaponZoom>().SetDefaultZoom();
+            }
     }
 
 }

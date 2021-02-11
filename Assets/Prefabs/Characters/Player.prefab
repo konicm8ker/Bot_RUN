@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 2286458862062068699}
   - component: {fileID: 2286458862060306427}
   - component: {fileID: 2286458862055731645}
+  - component: {fileID: 1357780863}
   m_Layer: 0
   m_Name: FPSCamera
   m_TagString: MainCamera
@@ -472,6 +473,25 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2286458862064099833}
   m_Enabled: 1
+--- !u!95 &1357780863
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2286458862064099833}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f5c5dc7cadc9d6ac298fcfe51980d6d4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2286458862064099835
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,8 +506,8 @@ GameObject:
   - component: {fileID: 2286458862058603163}
   - component: {fileID: 2286458862060140571}
   - component: {fileID: 2286458862064099834}
-  - component: {fileID: 3069852906664668375}
   - component: {fileID: 8546994715204333158}
+  - component: {fileID: 3069852906664668375}
   - component: {fileID: 8961927299909347799}
   m_Layer: 2
   m_Name: Player
@@ -780,6 +800,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+--- !u!114 &8546994715204333158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2286458862064099835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daef2b94dd9b8d572b27fb1a7c6e9ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoAmount: 100
 --- !u!114 &3069852906664668375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,21 +830,9 @@ MonoBehaviour:
   fpsController: {fileID: 2286458862057002011}
   gameOverCanvas: {fileID: 0}
   playerAnimator: {fileID: 8961927299909347799}
+  weaponAnimator: {fileID: 1357780863}
   playAgainBtn: {fileID: 0}
   gunReticle: {fileID: 0}
---- !u!114 &8546994715204333158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2286458862064099835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daef2b94dd9b8d572b27fb1a7c6e9ece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoAmount: 100
 --- !u!95 &8961927299909347799
 Animator:
   serializedVersion: 3
@@ -1509,7 +1530,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3835216809683172860}
+  - {fileID: 8498021651681196263}
   - {fileID: 4514167555644191007}
   - {fileID: 3949041719219317305}
   m_Father: {fileID: 2286458862063615449}
@@ -1528,6 +1549,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: 0
+  weaponAnimator: {fileID: 1357780863}
+  timer: 0
+  timerDuration: 0.25
+  scrollState: 
+  weaponToBeSwitched: 0
 --- !u!1 &5143130199315842527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,91 +2312,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1049731951316732724}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1336674683684399704
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 4983410949089048032}
-    m_Modifications:
-    - target: {fileID: 2292629569653044963, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 2286458862062068699}
-    - target: {fileID: 2292629569653044963, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: fpsController
-      value: 
-      objectReference: {fileID: 2286458862057002011}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9998096
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.008725136
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.017451786
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.00015229818
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 9.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3242151343849327902, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_Name
-      value: Sci-Fi Plasma Gun
-      objectReference: {fileID: 0}
-    - target: {fileID: 3242151343849327902, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801091549715097910, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: ammoSlot
-      value: 
-      objectReference: {fileID: 8546994715204333158}
-    - target: {fileID: 4801091549715097910, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-        type: 3}
-      propertyPath: FPSCamera
-      value: 
-      objectReference: {fileID: 2286458862062068699}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 63564f6e9a9f3b64f96112e9063fe9cc, type: 3}
---- !u!4 &3835216809683172860 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2861404058411964324, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1336674683684399704}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4415880364176898898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2445,4 +2386,99 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 830222874250908011, guid: 5f384b995df3ba2c2bc73d2087bc5ba8,
     type: 3}
   m_PrefabInstance: {fileID: 4415880364176898898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6772355819937421137
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4983410949089048032}
+    m_Modifications:
+    - target: {fileID: 2547037080875316492, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_Name
+      value: Sci-Fi Plasma Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1991
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1979
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.4198
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9998096
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.008725136
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.017451786
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00015229818
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071999297073442224, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: ammoSlot
+      value: 
+      objectReference: {fileID: 8546994715204333158}
+    - target: {fileID: 7071999297073442224, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: FPSCamera
+      value: 
+      objectReference: {fileID: 2286458862062068699}
+    - target: {fileID: 8108063017445485755, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 2286458862062068699}
+    - target: {fileID: 8108063017445485755, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+        type: 3}
+      propertyPath: fpsController
+      value: 
+      objectReference: {fileID: 2286458862057002011}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63564f6e9a9f3b64f96112e9063fe9cc, type: 3}
+--- !u!4 &8498021651681196263 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2887709056944992182, guid: 63564f6e9a9f3b64f96112e9063fe9cc,
+    type: 3}
+  m_PrefabInstance: {fileID: 6772355819937421137}
   m_PrefabAsset: {fileID: 0}

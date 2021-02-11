@@ -12,6 +12,7 @@ public class DeathHandler : MonoBehaviour
     [SerializeField] FirstPersonController fpsController;
     [SerializeField] GameObject gameOverCanvas;
     [SerializeField] Animator playerAnimator;
+    [SerializeField] Animator weaponAnimator;
     [SerializeField] Button playAgainBtn;
     [SerializeField] GameObject gunReticle;
     Camera fpsCamera;
@@ -41,6 +42,7 @@ public class DeathHandler : MonoBehaviour
     {
         gameOver = true;
         gunReticle.SetActive(false);
+        weaponAnimator.enabled = false;
         if(FindObjectOfType<WeaponSwitcher>().currentWeapon == 0)
         {
             // Set default FOV if zoomed in
