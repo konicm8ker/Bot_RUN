@@ -812,7 +812,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daef2b94dd9b8d572b27fb1a7c6e9ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoAmount: 100
+  ammoSlots:
+  - ammoType: 0
+    ammoAmount: 20
+  - ammoType: 1
+    ammoAmount: 100
+  - ammoType: 2
+    ammoAmount: 10
 --- !u!114 &3069852906664668375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2251,6 +2257,11 @@ PrefabInstance:
       objectReference: {fileID: 8546994715204333158}
     - target: {fileID: 2491429790895429603, guid: d07e67f1221a5d3d28706e3462c7bba9,
         type: 3}
+      propertyPath: ammoType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491429790895429603, guid: d07e67f1221a5d3d28706e3462c7bba9,
+        type: 3}
       propertyPath: FPSCamera
       value: 
       objectReference: {fileID: 2286458862062068699}
@@ -2374,6 +2385,11 @@ PrefabInstance:
       propertyPath: ammoSlot
       value: 
       objectReference: {fileID: 8546994715204333158}
+    - target: {fileID: 9167015751133320160, guid: 5f384b995df3ba2c2bc73d2087bc5ba8,
+        type: 3}
+      propertyPath: ammoType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9167015751133320160, guid: 5f384b995df3ba2c2bc73d2087bc5ba8,
         type: 3}
       propertyPath: FPSCamera
