@@ -66,8 +66,12 @@ public class Weapon : MonoBehaviour
         if(raycastHit)
         {
             ProcessWeaponHitVFX(hit);
-            EnemyHealth target = hit.transform.GetComponent<EnemyHealth>();
-            if(target){ target.TakeDamage(damage); } else { return; }
+            var target = hit.transform.gameObject;
+            
+            // Make sure raycast hit is on child collider of enemy objects
+            if(target.tag == "Enemy"){
+                target.GetComponentInParent<EnemyHealth>().TakeDamage(damage);
+            } else { return; }
         }
         else
         {

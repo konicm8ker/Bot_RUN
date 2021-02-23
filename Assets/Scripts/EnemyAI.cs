@@ -47,6 +47,24 @@ public class EnemyAI : MonoBehaviour
         isProvoked = true;
     }
 
+    private void EnemyDeath()
+    {
+        // Disable drone fans if drone bot
+        if(gameObject.name == "Enemy - DroneBot")
+        {
+            BroadcastMessage("DisableDroneFan");
+        }
+        // Disable enemy movement and attacks and play death anim
+        navMeshAgent.enabled = false;
+        gameObject.GetComponent<EnemyAI>().enabled = false;
+        enemyAnimator.SetTrigger("death");
+    }
+    public void DisableEnemyAnimator()
+    {
+        // Disable enemy animator after death anim is finished
+        enemyAnimator.enabled = false;
+    }
+
     private void EngageTarget()
     {
         if(distanceToTarget >= navMeshAgent.stoppingDistance)

@@ -15,6 +15,7 @@ public class EnemyAttack : MonoBehaviour
     public void AttackHitEvent()
     {
         if(!target){ return; }
+        // TODO: Play particle effect here for each enemy
         target.TakeDamage(damage);
     }
 

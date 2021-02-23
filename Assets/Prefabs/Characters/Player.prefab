@@ -578,7 +578,7 @@ MonoBehaviour:
     smoothTime: 5
     lockCursor: 1
     m_cursorIsLocked: 1
-  m_UseFovKick: 1
+  m_UseFovKick: 0
   m_FovKick:
     Camera: {fileID: 0}
     originalFov: 0
