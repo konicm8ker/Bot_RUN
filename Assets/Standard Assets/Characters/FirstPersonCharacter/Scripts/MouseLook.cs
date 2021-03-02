@@ -7,20 +7,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [Serializable]
     public class MouseLook
     {
-        public float XSensitivity = 2f;
-        public float YSensitivity = 2f;
+        public float XSensitivity = 0.75f;
+        public float YSensitivity = 0.75f;
         public bool clampVerticalRotation = true;
         public float MinimumX = -90F;
         public float MaximumX = 90F;
         public bool smooth;
         public float smoothTime = 5f;
         public bool lockCursor = true;
+        bool inputChecked = false;
 
 
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
         public bool m_cursorIsLocked = true;
-
 
         public void Init(Transform character, Transform camera)
         {
@@ -28,12 +28,40 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_CameraTargetRot = camera.localRotation;
         }
 
+        public void CheckInput()
+        {
+            // Check if there is a gamepad connected and if so update sensitivity, otherwise use default
+            if(Input.GetJoystickNames().Length > 0)
+            {
+                XSensitivity = 3f;
+                YSensitivity = 3f;
+                Debug.Log("Gamepad found!");
+            }
+            else
+            {
+                XSensitivity = 0.75f;
+                YSensitivity = 0.75f;
+            }
+            // Only check once when called at startup
+            inputChecked = true;
+        }
 
         public void LookRotation(Transform character, Transform camera)
         {
+            float mouseX = CrossPlatformInputManager.GetAxis("Mouse X");
+            float mouseY = CrossPlatformInputManager.GetAxis("Mouse Y");
+            if(mouseX != 0 || mouseY != 0)
+            {
+                if(inputChecked == false)
+                {
+                    CheckInput();
+                    Debug.Log("Only one.");
+                }
+            }
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
-
+            Debug.Log("XSen:" + XSensitivity + " | YSen: " + YSensitivity);
+            
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
 

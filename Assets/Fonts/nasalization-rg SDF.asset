@@ -172,6 +172,7 @@ MonoBehaviour:
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
   m_FaceInfo:
+    m_FaceIndex: 0
     m_FamilyName: Nasalization
     m_StyleName: Regular
     m_PointSize: 66

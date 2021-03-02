@@ -552,14 +552,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSlot: {fileID: 0}
+  ammoType: 0
   FPSCamera: {fileID: 0}
-  muzzleFlashVFX: {fileID: 9033209473822189970}
-  weaponHitVFX: {fileID: 7747730413217232479, guid: 83619a40ead68ef89b7c0d7e015e92bd,
-    type: 3}
+  muzzleFlashVFX: {fileID: 0}
+  weaponHitVFX: {fileID: 0}
   range: 75
-  damage: 15
-  timeBetweenShots: 0.75
+  damage: 30
+  timeBetweenShots: 1
   isAuto: 0
+  canShoot: 1
 --- !u!114 &8108063017445485755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +575,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpsController: {fileID: 0}
   mainCamera: {fileID: 0}
-  isZoomed: 0
 --- !u!1 &2573623341017436049
 GameObject:
   m_ObjectHideFlags: 0
