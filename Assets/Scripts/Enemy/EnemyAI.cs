@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] float targetRange = 5f;
+    // public float targetRange = 5f;
+    FirstPersonController fpsController;
     [SerializeField] float rotateSpeed = 5f;
     [SerializeField] Transform target;
     [SerializeField] DeathHandler deathHandler;
@@ -18,6 +19,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        fpsController = FindObjectOfType<FirstPersonController>().GetComponent<FirstPersonController>();
         enemyHealth = GetComponent<EnemyHealth>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshObstacle = GetComponent<NavMeshObstacle>();
@@ -34,7 +36,7 @@ public class EnemyAI : MonoBehaviour
         {
             EngageTarget();
         }
-        else if(distanceToTarget <= targetRange)
+        else if(distanceToTarget <= fpsController.enemyRadius)
         {
             isProvoked = true;
         }
@@ -42,9 +44,10 @@ public class EnemyAI : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
+        fpsController = FindObjectOfType<FirstPersonController>().GetComponent<FirstPersonController>();
         // Display the explosion radius when selected
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, targetRange);
+        Gizmos.DrawWireSphere(transform.position, fpsController.enemyRadius);
     }
 
     public void OnDamageTaken()
