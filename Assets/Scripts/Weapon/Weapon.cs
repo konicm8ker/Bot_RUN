@@ -15,12 +15,15 @@ public class Weapon : MonoBehaviour
     [SerializeField] int damage = 20;
     [SerializeField] float timeBetweenShots = 0.5f;
     [SerializeField] bool isAuto = true;
+    [SerializeField] Animator weaponAnimator;
     public bool canShoot = true;
+    int currentWeapon;
 
     void OnEnable()
     {
         // Makes sure weapons can shoot when switched back and forth
         canShoot = true;
+        currentWeapon = FindObjectOfType<WeaponSwitcher>().currentWeapon;
     }
 
     void Update()
@@ -31,7 +34,11 @@ public class Weapon : MonoBehaviour
             // Handle firing for automatic weapon
             StartCoroutine(FireWeapon());
         }
-        else if(CrossPlatformInputManager.GetAxis("Fire1") == 1 && canShoot)
+        else
+        {
+            weaponAnimator.SetTrigger("Idle");
+        }
+        if(CrossPlatformInputManager.GetAxis("Fire1") == 1 && canShoot)
         {
             StartCoroutine(FireWeapon());
         }
@@ -44,6 +51,7 @@ public class Weapon : MonoBehaviour
         // Only fire if enough ammo
         if(ammoSlot.RequestAmmoAmount(ammoType) > 0)
         {
+            PlayWeaponFireAnimation();
             PlayFiringVFX();
             ProcessRaycast();
             ammoSlot.ReduceAmmoAmount(ammoType);
@@ -51,6 +59,25 @@ public class Weapon : MonoBehaviour
         else { print("OUT OF AMMO."); }
         yield return new WaitForSeconds(timeBetweenShots);
         canShoot = true;
+    }
+
+    private void PlayWeaponFireAnimation()
+    {
+        // Play weapon fire animation depending on weapon active
+        if(currentWeapon == 0)
+        {
+            weaponAnimator.SetTrigger("WeaponFire1");
+        }
+        else if(currentWeapon == 1)
+        {
+            weaponAnimator.SetTrigger("WeaponFire2");
+        }
+        else if(currentWeapon == 2)
+        {
+            weaponAnimator.SetTrigger("WeaponFire3");
+        }
+        if(isAuto){ return; } // If automatic, set idle after active firing is finished
+        weaponAnimator.SetTrigger("Idle");
     }
 
     private void PlayFiringVFX()
