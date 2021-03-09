@@ -7,7 +7,6 @@ TagManager:
   - Pickup
   - Enemy - SpiderBot
   - Enemy - DroneBot
-  - SafeZone
   - Enemies
   layers:
   - Default

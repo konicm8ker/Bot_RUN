@@ -914,7 +914,7 @@ AnimationClip:
         time: 0
         value: {x: -6.31705e-30, y: 0, z: 0}
         inSlope: {x: -6e-44, y: -0, z: -0}
-        outSlope: {x: -1.4e-43, y: -0, z: -0}
+        outSlope: {x: -6e-44, y: -0, z: -0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -5668,7 +5668,7 @@ AnimationClip:
         time: 0
         value: -6.31705e-30
         inSlope: -6e-44
-        outSlope: -1.4e-43
+        outSlope: -6e-44
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334

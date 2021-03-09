@@ -24,6 +24,9 @@ public class RotateFan : MonoBehaviour
             }
             else
             {
+                // Disable dust particles emission when fan comes to a stop
+                var dustEmission = transform.GetChild(0).GetComponent<ParticleSystem>().emission;
+                dustEmission.enabled = false;
                 enabled = false;
             }
         }

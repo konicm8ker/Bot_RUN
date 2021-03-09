@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    // public float targetRange = 5f;
     FirstPersonController fpsController;
     [SerializeField] float rotateSpeed = 5f;
     [SerializeField] Transform target;
