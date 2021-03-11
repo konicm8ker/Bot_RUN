@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class WeaponSwitcher : MonoBehaviour
@@ -13,8 +15,25 @@ public class WeaponSwitcher : MonoBehaviour
     public int weaponToBeSwitched = 0;
     bool inputLock = false;
 
+    Transform ammoDisplay;
+    GameObject bulletsIcon;
+    GameObject shellsIcon;
+    GameObject slugsIcon;
+    TextMeshProUGUI ammoAmountText;
+    TextMeshProUGUI weaponNameText;
+    TextMeshProUGUI ammoNameText;
+
+    AmmoType ammoType;
+    Ammo ammoAmount;
+    AmmoType bullets;
+    AmmoType shells;
+    AmmoType slugs;
+
+
     void Start()
     {
+        GetAmmoInfo();
+        GetAmmoDisplayElements();
         SetActiveWeapon();
     }
 
@@ -27,7 +46,61 @@ public class WeaponSwitcher : MonoBehaviour
             ProcessKeyInput();
             ProcessScrollWheel();
             ProcessGamepadInput();
+            UpdateAmmoDisplay();
         }
+    }
+
+    private void GetAmmoInfo()
+    {
+        ammoAmount = FindObjectOfType<Ammo>();
+        bullets = gameObject.transform.GetChild(0).GetComponent<Weapon>().ammoType;
+        shells = gameObject.transform.GetChild(1).GetComponent<Weapon>().ammoType;
+        slugs = gameObject.transform.GetChild(2).GetComponent<Weapon>().ammoType;
+    }
+
+    private void GetAmmoDisplayElements()
+    {
+        ammoDisplay = GameObject.FindWithTag("Ammo Display").transform;
+        bulletsIcon = ammoDisplay.Find("Bullets Icon").gameObject;
+        shellsIcon = ammoDisplay.Find("Shells Icon").gameObject;
+        slugsIcon = ammoDisplay.Find("Slugs Icon").gameObject;
+        ammoAmountText = ammoDisplay.Find("Ammo Amount").GetComponent<TextMeshProUGUI>();
+        weaponNameText = ammoDisplay.Find("Weapon Name").GetComponent<TextMeshProUGUI>();
+        ammoNameText = ammoDisplay.Find("Ammo Name").GetComponent<TextMeshProUGUI>();
+    }
+
+    private void UpdateAmmoDisplay()
+    {
+        // Update the ammo display ui based on current active weapon
+        if(currentWeapon == 0)
+        {
+            UpdateAmmoIcons(bulletsIcon, shellsIcon, slugsIcon);
+            UpdateAmmoText(bullets, "Plasma Rifle");
+        }
+        else if(currentWeapon == 1)
+        {
+            UpdateAmmoIcons(shellsIcon, bulletsIcon, slugsIcon);
+            UpdateAmmoText(shells, "Automatic");
+        }
+        else if(currentWeapon == 2)
+        {
+            UpdateAmmoIcons(slugsIcon, bulletsIcon, shellsIcon);
+            UpdateAmmoText(slugs, "Shotgun");
+        }
+    }
+
+    private void UpdateAmmoIcons(GameObject icon1, GameObject icon2, GameObject icon3)
+    {
+        icon1.SetActive(true);
+        icon2.SetActive(false);
+        icon3.SetActive(false);
+    }
+
+    private void UpdateAmmoText(AmmoType type, string weapon)
+    {
+        ammoAmountText.text = ammoAmount.RequestAmmoAmount(type).ToString();
+        weaponNameText.text = weapon;
+        ammoNameText.text = type.ToString();
     }
 
     private void SetActiveWeapon()
@@ -177,7 +250,7 @@ public class WeaponSwitcher : MonoBehaviour
 
     private void WeaponSwitchDelay()
     {
-        // Only switch weapons from scroll wheel at smooth rate
+        // Only switch weapons with smooth a transition delay
         if(scrollState == "up")
         {
             ResetZoom();

@@ -5,19 +5,21 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    FirstPersonController fpsController;
     [SerializeField] float rotateSpeed = 5f;
-    [SerializeField] Transform target;
-    [SerializeField] DeathHandler deathHandler;
+    FirstPersonController fpsController;
     EnemyHealth enemyHealth;
     NavMeshAgent navMeshAgent;
     NavMeshObstacle navMeshObstacle;
     Animator enemyAnimator;
+    Transform target;
+    DeathHandler deathHandler;
     float distanceToTarget = Mathf.Infinity;
     bool isProvoked = false;
 
     void Start()
     {
+        target = FindObjectOfType<PlayerHealth>().transform;
+        deathHandler = FindObjectOfType<DeathHandler>();
         fpsController = FindObjectOfType<FirstPersonController>().GetComponent<FirstPersonController>();
         enemyHealth = GetComponent<EnemyHealth>();
         navMeshAgent = GetComponent<NavMeshAgent>();

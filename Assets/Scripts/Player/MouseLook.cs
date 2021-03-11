@@ -14,6 +14,7 @@ public class MouseLook
     public float smoothTime = 5f;
     public bool lockCursor = true;
     bool inputChecked = false;
+    bool inverted = false;
 
 
     private Quaternion m_CharacterTargetRot;
@@ -45,9 +46,11 @@ public class MouseLook
 
     public void LookRotation(Transform character, Transform camera)
     {
-        // Check if gamepad is connected on first look around movement
         float mouseX = CrossPlatformInputManager.GetAxis("Mouse X");
         float mouseY = CrossPlatformInputManager.GetAxis("Mouse Y");
+        // Toggle y-axis invert when key/button pressed
+        if(CrossPlatformInputManager.GetButtonDown("Invert")){ inverted = !inverted; }
+        if(inverted){ mouseY = -mouseY; }else{ mouseY = +mouseY; }
         float yRot = mouseX * XSensitivity;
         float xRot = mouseY * YSensitivity;
         
@@ -70,6 +73,7 @@ public class MouseLook
             camera.localRotation = m_CameraTargetRot;
         }
 
+        // Check if gamepad is connected on first look around movement
         if(mouseX != 0 || mouseY != 0)
         {
             if(inputChecked == false)

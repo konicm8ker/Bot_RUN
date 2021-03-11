@@ -6146,9 +6146,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
-  gameOver: 0
-  isCrouched: 0
   enemyRadius: 20
+  isCrouched: 0
+  gameOver: 0
 --- !u!114 &8546994715204333158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11760,6 +11760,7 @@ MonoBehaviour:
   damage: 60
   timeBetweenShots: 2
   isAuto: 0
+  weaponAnimator: {fileID: 1357780863}
   canShoot: 1
 --- !u!1 &3949041719471357892
 GameObject:
@@ -13331,6 +13332,7 @@ MonoBehaviour:
   damage: 10
   timeBetweenShots: 0.1
   isAuto: 1
+  weaponAnimator: {fileID: 1357780863}
   canShoot: 1
 --- !u!1 &7115224691025992123
 GameObject:
@@ -18887,6 +18889,7 @@ MonoBehaviour:
   damage: 30
   timeBetweenShots: 1
   isAuto: 0
+  weaponAnimator: {fileID: 1357780863}
   canShoot: 1
 --- !u!114 &3276823822450998250
 MonoBehaviour:

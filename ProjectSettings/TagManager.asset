@@ -8,6 +8,9 @@ TagManager:
   - Enemy - SpiderBot
   - Enemy - DroneBot
   - Enemies
+  - Enemy
+  - UI
+  - Ammo Display
   layers:
   - Default
   - TransparentFX

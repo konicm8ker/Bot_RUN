@@ -7,7 +7,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] Ammo ammoSlot;
-    [SerializeField] AmmoType ammoType;
+    public AmmoType ammoType;
     [SerializeField] Camera FPSCamera;
     [SerializeField] ParticleSystem muzzleFlashVFX;
     [SerializeField] GameObject weaponHitVFX;
