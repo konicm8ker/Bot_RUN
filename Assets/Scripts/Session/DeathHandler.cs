@@ -10,18 +10,25 @@ public class DeathHandler : MonoBehaviour
     public GameObject controller;
     [SerializeField] FirstPersonController fpsController;
     [SerializeField] GameObject gameOverCanvas;
+    [SerializeField] GameObject hudCanvas;
+    [SerializeField] GameObject UIButtons;
     [SerializeField] Animator playerAnimator;
     [SerializeField] Animator weaponAnimator;
     [SerializeField] Button playAgainBtn;
     [SerializeField] GameObject gunReticle;
+    CanvasGroup hudCG;
+    CanvasGroup UIButtonsCG;
     Camera fpsCamera;
     float fadeInDuration = 4f;
     bool alignToCenter = false;
 
     void Start()
     {
+        hudCG = hudCanvas.GetComponent<CanvasGroup>();
+        UIButtonsCG = UIButtons.GetComponent<CanvasGroup>();
         fpsCamera = transform.GetChild(0).GetComponent<Camera>();
         playerAnimator.enabled = false;
+        LeanTween.alphaCanvas(hudCG, 1f, 1f);
     }
 
     void Update()
@@ -40,7 +47,8 @@ public class DeathHandler : MonoBehaviour
     public void HandleDeath()
     {
         gameOver = true;
-        gunReticle.SetActive(false);
+        LeanTween.alphaCanvas(hudCG, 0f, 1f);
+        // gunReticle.SetActive(false);
         weaponAnimator.enabled = false;
         if(FindObjectOfType<WeaponSwitcher>().currentWeapon == 0)
         {
@@ -79,7 +87,13 @@ public class DeathHandler : MonoBehaviour
     {
         // Enable animator instead of call trigger event to prevent interferce with fpscontroller script
         playerAnimator.enabled = true;
-        Invoke("StopTime", 4f);
+        Invoke("ShowUIButtons", 4f);
+    }
+
+    private void ShowUIButtons()
+    {
+        LeanTween.alphaCanvas(UIButtonsCG, 1f, .3f);
+        Invoke("StopTime", .4f);
     }
 
     private void StopTime()

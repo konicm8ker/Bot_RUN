@@ -14,7 +14,6 @@ public class WeaponSwitcher : MonoBehaviour
     [SerializeField] string scrollState = "";
     public int weaponToBeSwitched = 0;
     bool inputLock = false;
-
     Transform ammoDisplay;
     GameObject bulletsIcon;
     GameObject shellsIcon;
