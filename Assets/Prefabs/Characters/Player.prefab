@@ -6146,7 +6146,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
+  pause: {fileID: 0}
+  hud: {fileID: 0}
   enemyRadius: 20
+  m_Paused: 0
+  isPaused: 0
   isCrouched: 0
   gameOver: 0
 --- !u!114 &8546994715204333158
@@ -6198,6 +6202,8 @@ MonoBehaviour:
   controller: {fileID: 2286458862064099835}
   fpsController: {fileID: 2998629966528372111}
   gameOverCanvas: {fileID: 0}
+  hudCanvas: {fileID: 0}
+  UIButtons: {fileID: 0}
   playerAnimator: {fileID: 8961927299909347799}
   weaponAnimator: {fileID: 1357780863}
   playAgainBtn: {fileID: 0}
@@ -11762,6 +11768,7 @@ MonoBehaviour:
   timeBetweenShots: 2
   isAuto: 0
   weaponAnimator: {fileID: 1357780863}
+  fpsController: {fileID: 2998629966528372111}
   canShoot: 1
 --- !u!1 &3949041719471357892
 GameObject:
@@ -12336,6 +12343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeapon: 0
+  fpsController: {fileID: 2998629966528372111}
   weaponAnimator: {fileID: 1357780863}
   timer: 0
   timerDuration: 0.25
@@ -13334,6 +13342,7 @@ MonoBehaviour:
   timeBetweenShots: 0.1
   isAuto: 1
   weaponAnimator: {fileID: 1357780863}
+  fpsController: {fileID: 2998629966528372111}
   canShoot: 1
 --- !u!1 &7115224691025992123
 GameObject:
@@ -18891,6 +18900,7 @@ MonoBehaviour:
   timeBetweenShots: 1
   isAuto: 0
   weaponAnimator: {fileID: 1357780863}
+  fpsController: {fileID: 2998629966528372111}
   canShoot: 1
 --- !u!114 &3276823822450998250
 MonoBehaviour:

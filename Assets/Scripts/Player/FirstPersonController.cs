@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using DentedPixel;
 
 #pragma warning disable 618, 649
 
@@ -43,7 +45,12 @@ public class FirstPersonController : MonoBehaviour
     private AudioSource m_AudioSource;
 
     // Custom variables
+    [SerializeField] Canvas pause;
+    [SerializeField] GameObject hud;
+    CanvasGroup pauseCG;
     public float enemyRadius = 20f;
+    public bool m_Paused = false;
+    public bool isPaused = false;
     public bool isCrouched = false;
     public bool gameOver = false;
     bool m_Crouch = false;
@@ -54,6 +61,7 @@ public class FirstPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        pauseCG = pause.GetComponent<CanvasGroup>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
         m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -75,12 +83,15 @@ public class FirstPersonController : MonoBehaviour
         {
             m_MouseLook.CheckInput();
         }
-        // Only rotate view with mouse while game is not over
-        if(gameOver == false){ RotateView(); }
+        RotateView();
         // the jump state needs to read here to make sure it is not missed
         if (!m_Jump && !isCrouched)
         {
-            m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            if(isPaused == false)
+            {
+                // Don't jump when game paused
+                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            }
         }
 
         if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
@@ -125,7 +136,6 @@ public class FirstPersonController : MonoBehaviour
 
         m_MoveDir.x = desiredMove.x*speed;
         m_MoveDir.z = desiredMove.z*speed;
-
 
         if (m_CharacterController.isGrounded)
         {
@@ -253,14 +263,55 @@ public class FirstPersonController : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(!m_IsWalking ? m_FovKick.FOVKickUp() : m_FovKick.FOVKickDown());
         }
+        // Check for pause input
+        m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
+        ProcessPauseState();
+
+        // Check for crouch input
         m_Crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
         ProcessCrouch();
 
     }
 
+    private void ProcessPauseState()
+    {
+        // toggle fade in out pause overlay
+        if(m_Paused)
+        {
+            isPaused = !isPaused;
+            FadePauseOverlay();
+        }
+
+    }
+
+    private void FadePauseOverlay()
+    {
+        if(isPaused)
+        {
+            // Fade in overlay
+            hud.SetActive(false);
+            LeanTween.alphaCanvas(pauseCG, 1f, .15f);
+            StartCoroutine(StopTime()); // Stop time after fade in is complete
+        }
+        else
+        {
+            // Fade out overlay
+            Time.timeScale = 1; // Resume time before fading out starts
+            LeanTween.alphaCanvas(pauseCG, 0f, .15f);
+            hud.SetActive(true);
+        }
+    }
+
+    IEnumerator StopTime()
+    {
+        yield return new WaitForSeconds(.15f);
+        Time.timeScale = 0;
+    }
+
 
     private void RotateView()
     {
+        if(isPaused || gameOver){ return; }
         m_MouseLook.LookRotation (transform, m_Camera.transform);
     }
 
@@ -283,6 +334,8 @@ public class FirstPersonController : MonoBehaviour
 
     private void ProcessCrouch()
     {
+        // Prevent crouching while running
+        if(!m_IsWalking || isPaused){ return; }
         if(m_Crouch)
         {
             isCrouched = !isCrouched;

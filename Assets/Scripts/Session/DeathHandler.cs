@@ -47,8 +47,7 @@ public class DeathHandler : MonoBehaviour
     public void HandleDeath()
     {
         gameOver = true;
-        LeanTween.alphaCanvas(hudCG, 0f, 1f);
-        // gunReticle.SetActive(false);
+        hudCanvas.SetActive(false);
         weaponAnimator.enabled = false;
         if(FindObjectOfType<WeaponSwitcher>().currentWeapon == 0)
         {

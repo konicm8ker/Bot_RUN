@@ -26,7 +26,6 @@ public class PlayerHealth : MonoBehaviour
         targetHealth = health - damage;
         canDrain = true;
         health -= damage;
-        // healthBar.SetHealth(health);
         if(health <= 0)
         {
             // Process post death methods
@@ -46,7 +45,6 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             canDrain = false;
-            Debug.Log(lastHealth);
         }
     }
 

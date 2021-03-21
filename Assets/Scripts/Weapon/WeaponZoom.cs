@@ -16,6 +16,9 @@ public class WeaponZoom : MonoBehaviour
 
     void Update()
     {
+        // Don't zoom when game paused
+        if(fpsController.isPaused){ return; }
+        
         // Mouse Input
         if(CrossPlatformInputManager.GetButtonDown("Zoom"))
         {

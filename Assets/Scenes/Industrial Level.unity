@@ -14159,12 +14159,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 961332317}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &961433862 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1606099576727841031, guid: 6fcefabcba8887cc2a0cf9bdd591b7b7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1606099577187490385}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &966393665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28326,6 +28320,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1954387268}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &1955645488 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 1955645488, guid: 6fcefabcba8887cc2a0cf9bdd591b7b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1606099577187490385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1956932182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31366,11 +31366,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3069852906664668375, guid: f01c3cd908b346f419cae1f7b5781fb0,
+    - target: {fileID: 2998629966528372111, guid: f01c3cd908b346f419cae1f7b5781fb0,
         type: 3}
-      propertyPath: quitBtn
+      propertyPath: hud
       value: 
-      objectReference: {fileID: 961433862}
+      objectReference: {fileID: 1606099577187490386}
+    - target: {fileID: 2998629966528372111, guid: f01c3cd908b346f419cae1f7b5781fb0,
+        type: 3}
+      propertyPath: pause
+      value: 
+      objectReference: {fileID: 1955645488}
     - target: {fileID: 3069852906664668375, guid: f01c3cd908b346f419cae1f7b5781fb0,
         type: 3}
       propertyPath: UIButtons
@@ -31381,11 +31386,6 @@ PrefabInstance:
       propertyPath: hudCanvas
       value: 
       objectReference: {fileID: 1606099577187490386}
-    - target: {fileID: 3069852906664668375, guid: f01c3cd908b346f419cae1f7b5781fb0,
-        type: 3}
-      propertyPath: uiButtons
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3069852906664668375, guid: f01c3cd908b346f419cae1f7b5781fb0,
         type: 3}
       propertyPath: gunReticle

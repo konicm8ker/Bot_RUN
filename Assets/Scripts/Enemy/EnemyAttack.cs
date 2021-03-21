@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [SerializeField] GameObject playerHitCanvas;
-    // [SerializeField] GameObject spiderBotAttack;
     [SerializeField] int damage = 10;
     PlayerHealth target;
     bool hitStarted = false;

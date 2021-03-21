@@ -16,6 +16,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] float timeBetweenShots = 0.5f;
     [SerializeField] bool isAuto = true;
     [SerializeField] Animator weaponAnimator;
+    [SerializeField] FirstPersonController fpsController;
     public bool canShoot = true;
     int currentWeapon;
 
@@ -28,7 +29,7 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        
+        if(fpsController.isPaused){ return; } // Don't process weapon fire when game is paused
         if(CrossPlatformInputManager.GetAxis("Fire1") == 1 && canShoot && isAuto)
         {
             // Handle firing for automatic weapon

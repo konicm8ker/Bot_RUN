@@ -8,6 +8,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class WeaponSwitcher : MonoBehaviour
 {
     public int currentWeapon = 0;
+    [SerializeField] FirstPersonController fpsController;
     [SerializeField] Animator weaponAnimator;
     [SerializeField] float timer = 0f;
     [SerializeField] float timerDuration = 0.25f;
@@ -38,6 +39,7 @@ public class WeaponSwitcher : MonoBehaviour
 
     void Update()
     {
+        if(fpsController.isPaused){ return; } // Don't cycle weapons when paused
         int previousWeapon = currentWeapon;
         if(inputLock == false)
         {
