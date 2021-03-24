@@ -47,6 +47,7 @@ public class FirstPersonController : MonoBehaviour
     // Custom variables
     [SerializeField] Canvas pause;
     [SerializeField] GameObject hud;
+    MainMenu mainMenu;
     CanvasGroup pauseCG;
     public float enemyRadius = 20f;
     public bool m_Paused = false;
@@ -61,6 +62,7 @@ public class FirstPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        mainMenu = FindObjectOfType<MainMenu>();
         pauseCG = pause.GetComponent<CanvasGroup>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
@@ -78,6 +80,7 @@ public class FirstPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(mainMenu.gameState == MainMenu.State.Menu){ return; }
         // Let player update sensitivity by pressing "U" button on keyboard
         if(CrossPlatformInputManager.GetButtonDown("Update Sensitivity"))
         {
@@ -275,7 +278,7 @@ public class FirstPersonController : MonoBehaviour
 
     private void ProcessPauseState()
     {
-        // toggle fade in out pause overlay
+        // Toggle fade in/out pause overlay
         if(m_Paused)
         {
             isPaused = !isPaused;

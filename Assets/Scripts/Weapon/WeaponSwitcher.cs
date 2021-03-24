@@ -29,9 +29,12 @@ public class WeaponSwitcher : MonoBehaviour
     AmmoType shells;
     AmmoType slugs;
 
+    MainMenu mainMenu;
+
 
     void Start()
     {
+        mainMenu = FindObjectOfType<MainMenu>();
         GetAmmoInfo();
         GetAmmoDisplayElements();
         SetActiveWeapon();
@@ -39,7 +42,8 @@ public class WeaponSwitcher : MonoBehaviour
 
     void Update()
     {
-        if(fpsController.isPaused){ return; } // Don't cycle weapons when paused
+        // Don't cycle weapons when paused or when menu is opened
+        if(fpsController.isPaused || mainMenu.gameState == MainMenu.State.Menu){ return; }
         int previousWeapon = currentWeapon;
         if(inputLock == false)
         {
