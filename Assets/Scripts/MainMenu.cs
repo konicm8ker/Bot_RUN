@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     public enum State { Game, Menu }
     public State gameState = State.Game;
     [SerializeField] Transform mainMenu;
+    [SerializeField] FirstPersonController fpsController;
     GameObject objectives;
     GameObject bgFill;
     bool showMenu = false;
@@ -21,6 +22,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
+        if(fpsController.isPaused || fpsController.gameOver){ return; }
         // Process input for showing/hiding main menu ui
         if(CrossPlatformInputManager.GetButtonDown("Menu"))
         {
@@ -29,9 +31,11 @@ public class MainMenu : MonoBehaviour
             {
                 gameState = State.Menu;
                 ToggleMenu(true);
+                Time.timeScale = 0;
             }
             else
             {
+                Time.timeScale = 1;
                 gameState = State.Game;
                 ToggleMenu(false);
             }

@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     int lastHealth;
     int targetHealth;
     bool canDrain = false;
+    bool canAdd = false;
 
     void Start()
     {
@@ -17,7 +18,18 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
+        AddHealth();
         DrainHealth();
+    }
+
+    public void IncreaseHealth(int healthAmount)
+    {
+        lastHealth = health;
+        targetHealth = health + healthAmount;
+        if(targetHealth > 100){ targetHealth = 100; } // Set max target health if over increased
+        canAdd = true;
+        health += healthAmount;
+        if(health > 100){ health = 100; } // Set max health if over increased
     }
 
     public void TakeDamage(int damage)
@@ -32,6 +44,21 @@ public class PlayerHealth : MonoBehaviour
             GetComponent<DeathHandler>().HandleDeath();
         }
         
+    }
+
+    private void AddHealth()
+    {
+        if(canAdd == false){ return; }
+        if(lastHealth < targetHealth)
+        {
+            Debug.Log("Increasing health");
+            lastHealth++;
+            healthBar.SetHealth(lastHealth);
+        }
+        else
+        {
+            canAdd = false;
+        }
     }
 
     private void DrainHealth()

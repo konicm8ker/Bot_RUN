@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotatePickup : MonoBehaviour
 {
-    Vector3 rotateAmount = new Vector3(0f,50f,0f);
+    public Vector3 rotateAmount = new Vector3(0f,50f,0f);
 
     void Update()
     {

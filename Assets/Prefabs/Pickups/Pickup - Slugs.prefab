@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bc740b3fdbe4263a0350ac413e178d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateAmount: {x: 0, y: 50, z: 0}
 --- !u!1 &259005431375696995
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoType: 2
-  ammoAmount: 5
+  ammoAmount: 4
 --- !u!1 &259005432211303594
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,6 +47,7 @@ public class FirstPersonController : MonoBehaviour
     // Custom variables
     [SerializeField] Canvas pause;
     [SerializeField] GameObject hud;
+    [SerializeField] GameObject crouchDisplay;
     MainMenu mainMenu;
     CanvasGroup pauseCG;
     public float enemyRadius = 20f;
@@ -80,7 +81,8 @@ public class FirstPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(mainMenu.gameState == MainMenu.State.Menu){ return; }
+
+        if(mainMenu.gameState == MainMenu.State.Menu || gameOver){ return; }
         // Let player update sensitivity by pressing "U" button on keyboard
         if(CrossPlatformInputManager.GetButtonDown("Update Sensitivity"))
         {
@@ -266,6 +268,7 @@ public class FirstPersonController : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(!m_IsWalking ? m_FovKick.FOVKickUp() : m_FovKick.FOVKickDown());
         }
+
         // Check for pause input
         m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
         ProcessPauseState();
@@ -346,6 +349,7 @@ public class FirstPersonController : MonoBehaviour
 
         if(isCrouched)
         {
+            ToggleCrouchDisplay(true);
             // When crouched slow move speed, disable run/jump and shrink enemy radius
             m_CharacterController.height -= 0.1f * Time.deltaTime * crouchSpeed; 
             if(m_CharacterController.height <= crouchMin) // Set max height
@@ -357,6 +361,7 @@ public class FirstPersonController : MonoBehaviour
         }
         else
         {
+            ToggleCrouchDisplay(false);
             // When not crouched restore move speed, enable run/jump and restore enemy radius
             m_CharacterController.height += 0.1f * Time.deltaTime * crouchSpeed;
             if(m_CharacterController.height >= crouchMax) // Set min height
@@ -366,6 +371,11 @@ public class FirstPersonController : MonoBehaviour
             m_WalkSpeed = 5f;
             enemyRadius = 20f;
         }
+    }
+
+    private void ToggleCrouchDisplay(bool value)
+    {
+        crouchDisplay.SetActive(value);
     }
 
 }

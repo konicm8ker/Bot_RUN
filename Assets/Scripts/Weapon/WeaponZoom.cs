@@ -7,6 +7,7 @@ public class WeaponZoom : MonoBehaviour
 {
     [SerializeField] FirstPersonController fpsController;
     [SerializeField] Camera mainCamera;
+    MainMenu mainMenu;
     float zoomInFOV = 15f;
     float zoomOutFOV = 60f;
     float zoomInSensitivity = 0.1875f;
@@ -14,10 +15,15 @@ public class WeaponZoom : MonoBehaviour
     bool isZoomed = false;
     bool canZoom = true;
 
+    void Start()
+    {
+        mainMenu = FindObjectOfType<MainMenu>();
+    }
+
     void Update()
     {
-        // Don't zoom when game paused
-        if(fpsController.isPaused){ return; }
+        // Don't zoom when game paused or menu is active
+        if(fpsController.isPaused || mainMenu.gameState == MainMenu.State.Menu){ return; }
         
         // Mouse Input
         if(CrossPlatformInputManager.GetButtonDown("Zoom"))

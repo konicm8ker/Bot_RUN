@@ -6140,7 +6140,7 @@ MonoBehaviour:
   m_JumpBob:
     BobDuration: 0
     BobAmount: 0
-  m_StepInterval: 5
+  m_StepInterval: 7
   m_FootstepSounds:
   - {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
@@ -6148,6 +6148,7 @@ MonoBehaviour:
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   pause: {fileID: 0}
   hud: {fileID: 0}
+  crouchDisplay: {fileID: 0}
   enemyRadius: 20
   m_Paused: 0
   isPaused: 0
@@ -6171,7 +6172,7 @@ MonoBehaviour:
   - ammoType: 1
     ammoAmount: 100
   - ammoType: 2
-    ammoAmount: 10
+    ammoAmount: 8
 --- !u!114 &2286458862064099834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12308,7 +12309,7 @@ GameObject:
   - component: {fileID: 233286310288281158}
   m_Layer: 0
   m_Name: Weapons
-  m_TagString: Untagged
+  m_TagString: Weapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

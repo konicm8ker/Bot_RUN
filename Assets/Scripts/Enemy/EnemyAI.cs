@@ -31,7 +31,6 @@ public class EnemyAI : MonoBehaviour
 
     void LateUpdate()
     {
-
         distanceToTarget = Vector3.Distance(transform.position, target.position);
         if(isProvoked)
         {
