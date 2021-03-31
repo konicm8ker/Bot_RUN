@@ -12,6 +12,7 @@ TagManager:
   - UI
   - Ammo Display
   - Weapons
+  - HUD
   layers:
   - Default
   - TransparentFX

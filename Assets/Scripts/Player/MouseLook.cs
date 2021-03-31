@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using DentedPixel;
+using TMPro;
 
 [Serializable]
 public class MouseLook
@@ -13,9 +15,10 @@ public class MouseLook
     public bool smooth;
     public float smoothTime = 5f;
     public bool lockCursor = true;
+    public string joystickType;
     bool inputChecked = false;
     bool inverted = false;
-
+    string[] joysticks;
 
     private Quaternion m_CharacterTargetRot;
     private Quaternion m_CameraTargetRot;
@@ -27,29 +30,67 @@ public class MouseLook
         m_CameraTargetRot = camera.localRotation;
     }
 
-    public void CheckInput()
+    public string CheckInput()
     {
+        // Only check once when called at startup
+        inputChecked = true;
+
+        joysticks = Input.GetJoystickNames();
+        var statusText = "";
         // Check if there is a gamepad connected and if so update sensitivity, otherwise use default
-        if(Input.GetJoystickNames().Length > 0)
+        if(joysticks.Length > 0)
         {
+            GetJoystickType();
             XSensitivity = 3f;
             YSensitivity = 3f;
+            return statusText = joystickType + " controller found!\nUsing gamepad sensitivity.";
         }
         else
         {
             XSensitivity = 0.75f;
             YSensitivity = 0.75f;
+            return statusText = "No controller found!\nUsing mouse sensitivity.";
         }
-        // Only check once when called at startup
-        inputChecked = true;
     }
 
-    public void LookRotation(Transform character, Transform camera)
+    private void GetJoystickType()
+    {
+        joystickType = "";
+        if(joysticks[0].ToLower().Contains("microsoft") || joysticks[0].ToLower().Contains("xbox"))
+        {
+            joystickType = "Xbox One";
+        }
+        else if(joysticks[0].ToLower().Contains("sony") || joysticks[0].ToLower().Contains("ps4"))
+        {
+            joystickType = "PS4";
+        }
+        else if(joysticks[0].ToLower().Contains("wireless"))
+        {
+            joystickType = "Wireless";
+        }
+        if(joystickType == ""){ joystickType = "Unrecognized"; }
+    }
+
+    public void LookRotation(Transform character, Transform camera, bool isFirefox)
     {
         float mouseX = CrossPlatformInputManager.GetAxis("Mouse X");
         float mouseY = CrossPlatformInputManager.GetAxis("Mouse Y");
         // Toggle y-axis invert when key/button pressed
-        if(CrossPlatformInputManager.GetButtonDown("Invert")){ inverted = !inverted; }
+        if(isFirefox)
+        {
+            if(joystickType == "PS4")
+            {
+                if(CrossPlatformInputManager.GetButtonDown("PS4 Invert")){ inverted = !inverted; }
+            }
+            else
+            {
+                if(CrossPlatformInputManager.GetButtonDown("Firefox Invert")){ inverted = !inverted; }
+            }
+        }
+        else
+        {
+            if(CrossPlatformInputManager.GetButtonDown("Invert")){ inverted = !inverted; }
+        }
         if(inverted){ mouseY = -mouseY; }else{ mouseY = +mouseY; }
         float yRot = mouseX * XSensitivity;
         float xRot = mouseY * YSensitivity;
@@ -78,7 +119,8 @@ public class MouseLook
         {
             if(inputChecked == false)
             {
-                CheckInput();
+                var statusText = CheckInput();
+                GameObject.FindWithTag("Player").GetComponent<FirstPersonController>().FadeInDeviceStatus(statusText);
             }
         }
         // Debug.Log("XSen:" + XSensitivity + " | YSen: " + YSensitivity);

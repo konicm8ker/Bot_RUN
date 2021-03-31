@@ -5,6 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
 using DentedPixel;
+using TMPro;
 
 #pragma warning disable 618, 649
 
@@ -48,23 +49,31 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] Canvas pause;
     [SerializeField] GameObject hud;
     [SerializeField] GameObject crouchDisplay;
+    [SerializeField] Canvas deviceStatus;
+    [SerializeField] TextMeshProUGUI deviceStatusText;
+    Browser browser;
     MainMenu mainMenu;
     CanvasGroup pauseCG;
+    CanvasGroup deviceStatusCG;
     public float enemyRadius = 20f;
     public bool m_Paused = false;
     public bool isPaused = false;
     public bool isCrouched = false;
     public bool gameOver = false;
     bool m_Crouch = false;
+    bool canUpdate = true;
     float crouchSpeed = 60f;
     float crouchMax = 1.8f;
     float crouchMin = 1f;
+    string statusText;
 
     // Use this for initialization
     private void Start()
     {
+        browser = FindObjectOfType<Browser>();
         mainMenu = FindObjectOfType<MainMenu>();
         pauseCG = pause.GetComponent<CanvasGroup>();
+        deviceStatusCG = deviceStatus.GetComponent<CanvasGroup>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
         m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -84,9 +93,11 @@ public class FirstPersonController : MonoBehaviour
 
         if(mainMenu.gameState == MainMenu.State.Menu || gameOver){ return; }
         // Let player update sensitivity by pressing "U" button on keyboard
-        if(CrossPlatformInputManager.GetButtonDown("Update Sensitivity"))
+        if(CrossPlatformInputManager.GetButtonDown("Update Sensitivity") && canUpdate)
         {
-            m_MouseLook.CheckInput();
+            canUpdate = false;
+            statusText = m_MouseLook.CheckInput();
+            FadeInDeviceStatus(statusText);
         }
         RotateView();
         // the jump state needs to read here to make sure it is not missed
@@ -94,8 +105,24 @@ public class FirstPersonController : MonoBehaviour
         {
             if(isPaused == false)
             {
-                // Don't jump when game paused
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                if(browser.isFirefox)
+                {
+                    if(m_MouseLook.joystickType == "PS4")
+                    {
+                        // Don't jump when game paused
+                        m_Jump = CrossPlatformInputManager.GetButtonDown("PS4 Jump");
+                    }
+                    else
+                    {
+                        // Don't jump when game paused
+                        m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                    }
+                }
+                else
+                {
+                    // Don't jump when game paused
+                    m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+                }
             }
         }
 
@@ -113,6 +140,20 @@ public class FirstPersonController : MonoBehaviour
 
         m_PreviouslyGrounded = m_CharacterController.isGrounded;
         CharacterUpdate();
+    }
+
+    public void FadeInDeviceStatus(string statusText)
+    {
+        deviceStatusText.text = statusText;
+        LeanTween.alphaCanvas(deviceStatusCG, 1f, .25f);
+        StartCoroutine(FadeOutDeviceStatus());
+    }
+
+    IEnumerator FadeOutDeviceStatus()
+    {
+        yield return new WaitForSeconds(2f);
+        LeanTween.alphaCanvas(deviceStatusCG, 0f, .25f);
+        canUpdate = true;
     }
 
 
@@ -248,7 +289,21 @@ public class FirstPersonController : MonoBehaviour
         // keep track of whether or not the character is walking or running
         if(!isCrouched)
         {
-            m_IsWalking = !CrossPlatformInputManager.GetButton("Run");
+            if(browser.isFirefox)
+            {
+                if(m_MouseLook.joystickType == "PS4")
+                {
+                    m_IsWalking = !CrossPlatformInputManager.GetButton("PS4 Run");
+                }
+                else
+                {
+                    m_IsWalking = !CrossPlatformInputManager.GetButton("Firefox Run");
+                }
+            }
+            else
+            {
+                m_IsWalking = !CrossPlatformInputManager.GetButton("Run");
+            }
         }
 #endif
         // set the desired speed to be walking or running
@@ -268,13 +323,35 @@ public class FirstPersonController : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(!m_IsWalking ? m_FovKick.FOVKickUp() : m_FovKick.FOVKickDown());
         }
+        if(browser.isFirefox)
+        {
+            if(m_MouseLook.joystickType == "PS4")
+            {
+                // Check for pause input
+                m_Paused = CrossPlatformInputManager.GetButtonDown("PS4 Pause");
 
-        // Check for pause input
-        m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
+                // Check for crouch input
+                m_Crouch = CrossPlatformInputManager.GetButtonDown("PS4 Crouch");
+            }
+            else
+            {
+                // Check for pause input
+                m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
+
+                // Check for crouch input
+                m_Crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
+            }
+        }
+        else
+        {
+            // Check for pause input
+            m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
+
+            // Check for crouch input
+            m_Crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
+        }
+
         ProcessPauseState();
-
-        // Check for crouch input
-        m_Crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
         ProcessCrouch();
 
     }
@@ -318,7 +395,7 @@ public class FirstPersonController : MonoBehaviour
     private void RotateView()
     {
         if(isPaused || gameOver){ return; }
-        m_MouseLook.LookRotation (transform, m_Camera.transform);
+        m_MouseLook.LookRotation (transform, m_Camera.transform, browser.isFirefox);
     }
 
 

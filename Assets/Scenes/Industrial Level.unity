@@ -6669,6 +6669,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 224627d1d9dd7c0de8f1693d75ca4f60, type: 3}
+--- !u!114 &500020075 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 500020075, guid: 6fcefabcba8887cc2a0cf9bdd591b7b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1606099577187490385}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &502088768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19445,6 +19457,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1369132402}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &1377359502 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 1377359502, guid: 6fcefabcba8887cc2a0cf9bdd591b7b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1606099577187490385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1383773710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31418,6 +31436,7 @@ GameObject:
   - component: {fileID: 6251104997892913847}
   - component: {fileID: 6251104997892913844}
   - component: {fileID: 6251104997892913848}
+  - component: {fileID: 6251104997892913849}
   m_Layer: 5
   m_Name: Game Session
   m_TagString: Untagged
@@ -31454,6 +31473,19 @@ MonoBehaviour:
   gameState: 0
   mainMenu: {fileID: 1933866636}
   fpsController: {fileID: 836842875}
+--- !u!114 &6251104997892913849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6251104997892913846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a9e569ecec059df9279c90760f6280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFirefox: 0
 --- !u!1001 &8518847274401058761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31538,9 +31570,19 @@ PrefabInstance:
       objectReference: {fileID: 1955645488}
     - target: {fileID: 2998629966528372111, guid: f01c3cd908b346f419cae1f7b5781fb0,
         type: 3}
+      propertyPath: deviceStatus
+      value: 
+      objectReference: {fileID: 1377359502}
+    - target: {fileID: 2998629966528372111, guid: f01c3cd908b346f419cae1f7b5781fb0,
+        type: 3}
       propertyPath: crouchDisplay
       value: 
       objectReference: {fileID: 66960464}
+    - target: {fileID: 2998629966528372111, guid: f01c3cd908b346f419cae1f7b5781fb0,
+        type: 3}
+      propertyPath: deviceStatusText
+      value: 
+      objectReference: {fileID: 500020075}
     - target: {fileID: 3069852906664668375, guid: f01c3cd908b346f419cae1f7b5781fb0,
         type: 3}
       propertyPath: UIButtons

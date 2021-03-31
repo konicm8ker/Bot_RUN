@@ -31,7 +31,6 @@ public class WeaponSwitcher : MonoBehaviour
 
     MainMenu mainMenu;
 
-
     void Start()
     {
         mainMenu = FindObjectOfType<MainMenu>();
@@ -216,7 +215,7 @@ public class WeaponSwitcher : MonoBehaviour
             {
                 scrollState = "up";
             }
-        }
+        } 
         WeaponSwitchDelay();
     }
 

@@ -51,7 +51,7 @@ public class PlayerHealth : MonoBehaviour
         if(canAdd == false){ return; }
         if(lastHealth < targetHealth)
         {
-            Debug.Log("Increasing health");
+            // Debug.Log("Increasing health");
             lastHealth++;
             healthBar.SetHealth(lastHealth);
         }
