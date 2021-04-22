@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Industrial Level.unity
+    path: Assets/Scenes/Night Level.unity
     guid: 715a42f65f8def8d58ce54fe4ec5d13c
   m_configObjects: {}

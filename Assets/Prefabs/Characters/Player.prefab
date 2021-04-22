@@ -6049,6 +6049,7 @@ MonoBehaviour:
     smooth: 0
     smoothTime: 5
     lockCursor: 1
+    joystickType: 
     m_cursorIsLocked: 1
   m_UseFovKick: 0
   m_FovKick:
@@ -6149,6 +6150,8 @@ MonoBehaviour:
   pause: {fileID: 0}
   hud: {fileID: 0}
   crouchDisplay: {fileID: 0}
+  deviceStatus: {fileID: 0}
+  deviceStatusText: {fileID: 0}
   enemyRadius: 20
   m_Paused: 0
   isPaused: 0

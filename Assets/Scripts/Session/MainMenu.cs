@@ -11,13 +11,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] FirstPersonController fpsController;
     GameObject objectives;
     GameObject bgFill;
-    Browser browser;
     bool showMenu = false;
     int tabIndex = 1;
 
     void Start()
     {
-        browser = FindObjectOfType<Browser>();
         objectives = mainMenu.GetChild(4).gameObject;
         bgFill = mainMenu.GetChild(0).gameObject;
     }
@@ -25,68 +23,22 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         if(fpsController.isPaused || fpsController.gameOver){ return; }
-
-        if(browser.isFirefox)
+ 
+        // Process input for showing/hiding main menu ui
+        if(CrossPlatformInputManager.GetButtonDown("Menu"))
         {
-            if(fpsController.m_MouseLook.joystickType == "PS4")
+            showMenu = !showMenu;
+            if(showMenu)
             {
-                // Process input for showing/hiding main menu ui
-                if(CrossPlatformInputManager.GetButtonDown("PS4 Menu"))
-                {
-                    showMenu = !showMenu;
-                    if(showMenu)
-                    {
-                        gameState = State.Menu;
-                        ToggleMenu(true);
-                        Time.timeScale = 0;
-                    }
-                    else
-                    {
-                        Time.timeScale = 1;
-                        gameState = State.Game;
-                        ToggleMenu(false);
-                    }
-                }
+                gameState = State.Menu;
+                ToggleMenu(true);
+                Time.timeScale = 0;
             }
             else
             {
-                // Process input for showing/hiding main menu ui
-                if(CrossPlatformInputManager.GetButtonDown("Menu"))
-                {
-                    showMenu = !showMenu;
-                    if(showMenu)
-                    {
-                        gameState = State.Menu;
-                        ToggleMenu(true);
-                        Time.timeScale = 0;
-                    }
-                    else
-                    {
-                        Time.timeScale = 1;
-                        gameState = State.Game;
-                        ToggleMenu(false);
-                    }
-                }
-            }
-        }
-        else
-        {
-            // Process input for showing/hiding main menu ui
-            if(CrossPlatformInputManager.GetButtonDown("Menu"))
-            {
-                showMenu = !showMenu;
-                if(showMenu)
-                {
-                    gameState = State.Menu;
-                    ToggleMenu(true);
-                    Time.timeScale = 0;
-                }
-                else
-                {
-                    Time.timeScale = 1;
-                    gameState = State.Game;
-                    ToggleMenu(false);
-                }
+                Time.timeScale = 1;
+                gameState = State.Game;
+                ToggleMenu(false);
             }
         }
         

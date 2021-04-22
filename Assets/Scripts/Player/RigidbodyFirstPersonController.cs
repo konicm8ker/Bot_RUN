@@ -226,7 +226,7 @@ public class RigidbodyFirstPersonController : MonoBehaviour
         // get the rotation before it's changed
         float oldYRotation = transform.eulerAngles.y;
 
-        mouseLook.LookRotation (transform, cam.transform, false);
+        mouseLook.LookRotation(transform, cam.transform);
 
         if (m_IsGrounded || advancedSettings.airControl)
         {

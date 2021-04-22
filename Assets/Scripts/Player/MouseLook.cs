@@ -71,26 +71,12 @@ public class MouseLook
         if(joystickType == ""){ joystickType = "Unrecognized"; }
     }
 
-    public void LookRotation(Transform character, Transform camera, bool isFirefox)
+    public void LookRotation(Transform character, Transform camera)
     {
         float mouseX = CrossPlatformInputManager.GetAxis("Mouse X");
         float mouseY = CrossPlatformInputManager.GetAxis("Mouse Y");
-        // Toggle y-axis invert when key/button pressed
-        if(isFirefox)
-        {
-            if(joystickType == "PS4")
-            {
-                if(CrossPlatformInputManager.GetButtonDown("PS4 Invert")){ inverted = !inverted; }
-            }
-            else
-            {
-                if(CrossPlatformInputManager.GetButtonDown("Firefox Invert")){ inverted = !inverted; }
-            }
-        }
-        else
-        {
-            if(CrossPlatformInputManager.GetButtonDown("Invert")){ inverted = !inverted; }
-        }
+        
+        if(CrossPlatformInputManager.GetButtonDown("Invert")){ inverted = !inverted; }
         if(inverted){ mouseY = -mouseY; }else{ mouseY = +mouseY; }
         float yRot = mouseX * XSensitivity;
         float xRot = mouseY * YSensitivity;

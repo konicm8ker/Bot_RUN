@@ -51,7 +51,6 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] GameObject crouchDisplay;
     [SerializeField] Canvas deviceStatus;
     [SerializeField] TextMeshProUGUI deviceStatusText;
-    Browser browser;
     MainMenu mainMenu;
     CanvasGroup pauseCG;
     CanvasGroup deviceStatusCG;
@@ -70,7 +69,6 @@ public class FirstPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        browser = FindObjectOfType<Browser>();
         mainMenu = FindObjectOfType<MainMenu>();
         pauseCG = pause.GetComponent<CanvasGroup>();
         deviceStatusCG = deviceStatus.GetComponent<CanvasGroup>();
@@ -105,24 +103,7 @@ public class FirstPersonController : MonoBehaviour
         {
             if(isPaused == false)
             {
-                if(browser.isFirefox)
-                {
-                    if(m_MouseLook.joystickType == "PS4")
-                    {
-                        // Don't jump when game paused
-                        m_Jump = CrossPlatformInputManager.GetButtonDown("PS4 Jump");
-                    }
-                    else
-                    {
-                        // Don't jump when game paused
-                        m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-                    }
-                }
-                else
-                {
-                    // Don't jump when game paused
-                    m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-                }
+                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
         }
 
@@ -289,21 +270,7 @@ public class FirstPersonController : MonoBehaviour
         // keep track of whether or not the character is walking or running
         if(!isCrouched)
         {
-            if(browser.isFirefox)
-            {
-                if(m_MouseLook.joystickType == "PS4")
-                {
-                    m_IsWalking = !CrossPlatformInputManager.GetButton("PS4 Run");
-                }
-                else
-                {
-                    m_IsWalking = !CrossPlatformInputManager.GetButton("Firefox Run");
-                }
-            }
-            else
-            {
-                m_IsWalking = !CrossPlatformInputManager.GetButton("Run");
-            }
+            m_IsWalking = !CrossPlatformInputManager.GetButton("Run");
         }
 #endif
         // set the desired speed to be walking or running
@@ -323,33 +290,12 @@ public class FirstPersonController : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(!m_IsWalking ? m_FovKick.FOVKickUp() : m_FovKick.FOVKickDown());
         }
-        if(browser.isFirefox)
-        {
-            if(m_MouseLook.joystickType == "PS4")
-            {
-                // Check for pause input
-                m_Paused = CrossPlatformInputManager.GetButtonDown("PS4 Pause");
+        
+        // Check for pause input
+        m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
 
-                // Check for crouch input
-                m_Crouch = CrossPlatformInputManager.GetButtonDown("PS4 Crouch");
-            }
-            else
-            {
-                // Check for pause input
-                m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
-
-                // Check for crouch input
-                m_Crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
-            }
-        }
-        else
-        {
-            // Check for pause input
-            m_Paused = CrossPlatformInputManager.GetButtonDown("Pause");
-
-            // Check for crouch input
-            m_Crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
-        }
+        // Check for crouch input
+        m_Crouch = CrossPlatformInputManager.GetButtonDown("Crouch");
 
         ProcessPauseState();
         ProcessCrouch();
@@ -395,7 +341,7 @@ public class FirstPersonController : MonoBehaviour
     private void RotateView()
     {
         if(isPaused || gameOver){ return; }
-        m_MouseLook.LookRotation (transform, m_Camera.transform, browser.isFirefox);
+        m_MouseLook.LookRotation (transform, m_Camera.transform);
     }
 
 

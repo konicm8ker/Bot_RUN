@@ -17,13 +17,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] bool isAuto = true;
     [SerializeField] Animator weaponAnimator;
     [SerializeField] FirstPersonController fpsController;
-    Browser browser;
     public bool canShoot = true;
     int currentWeapon;
 
     void OnEnable()
     {
-        browser = FindObjectOfType<Browser>();
         // Makes sure weapons can shoot when switched back and forth
         canShoot = true;
         currentWeapon = FindObjectOfType<WeaponSwitcher>().currentWeapon;
@@ -33,58 +31,18 @@ public class Weapon : MonoBehaviour
     {
         if(fpsController.isPaused){ return; } // Don't process weapon fire when game is paused
 
-        if(browser.isFirefox)
+        if(CrossPlatformInputManager.GetAxis("Fire1") == 1 && canShoot && isAuto)
         {
-
-            // Check if PS4
-            if(fpsController.m_MouseLook.joystickType == "PS4")
-            {
-                if(CrossPlatformInputManager.GetButton("PS4 Fire1") && canShoot && isAuto)
-                {
-                    // Handle firing for automatic weapon
-                    StartCoroutine(FireWeapon());
-                }
-                else
-                {
-                    weaponAnimator.SetTrigger("Idle");
-                }
-                if(CrossPlatformInputManager.GetButton("PS4 Fire1") && canShoot)
-                {
-                    StartCoroutine(FireWeapon());
-                }
-            }
-            else
-            {
-                if(CrossPlatformInputManager.GetAxis("Firefox Fire1") == 1 && canShoot && isAuto)
-                {
-                    // Handle firing for automatic weapon
-                    StartCoroutine(FireWeapon());
-                }
-                else
-                {
-                    weaponAnimator.SetTrigger("Idle");
-                }
-                if(CrossPlatformInputManager.GetAxis("Firefox Fire1") == 1 && canShoot)
-                {
-                    StartCoroutine(FireWeapon());
-                }
-            }
+            // Handle firing for automatic weapon
+            StartCoroutine(FireWeapon());
         }
         else
         {
-            if(CrossPlatformInputManager.GetAxis("Fire1") == 1 && canShoot && isAuto)
-            {
-                // Handle firing for automatic weapon
-                StartCoroutine(FireWeapon());
-            }
-            else
-            {
-                weaponAnimator.SetTrigger("Idle");
-            }
-            if(CrossPlatformInputManager.GetAxis("Fire1") == 1 && canShoot)
-            {
-                StartCoroutine(FireWeapon());
-            }
+            weaponAnimator.SetTrigger("Idle");
+        }
+        if(CrossPlatformInputManager.GetAxis("Fire1") == 1 && canShoot)
+        {
+            StartCoroutine(FireWeapon());
         }
     }
 
